@@ -1,0 +1,54 @@
+/* Estilos base */
+.nav-contenido {
+  display: flex;
+  background: linear-gradient(180deg, #E94E1B 0%, #F39200 100%);
+  justify-content: space-between;
+  color: white;
+}
+
+:host ::ng-deep .white-icon .pi {
+  color: white !important;
+}
+
+.contenido {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.salida {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin: 10px;
+}
+
+.footer-contenido {
+  display: flex;
+  background: linear-gradient(360deg, #E94E1B 0%, #F39200 100%);
+  justify-content: center;
+  align-items: center;
+  color: white;
+  height: 60px;
+  width: 100vw;
+}
+
+.contenido2 p {
+  text-align: center;
+}
+
+/* Media queries para dispositivos de tamaño pequeño */
+@media screen and (max-width: 768px) {
+  .nav-contenido {
+    align-items: center;
+  }
+
+  .contenido {
+    margin-bottom: 10px;
+  }
+
+  .footer-contenido {
+    flex-direction: column;
+    height: auto;
+  }
+}

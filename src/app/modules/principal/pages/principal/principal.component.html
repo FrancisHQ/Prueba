@@ -1,0 +1,303 @@
+<div class="title-principal">
+  <div class="title-principal-menu">
+    <p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu>
+  </div>
+  <p>Se detalla el listado de tareas en la tabla adjunta.</p>
+</div>
+<div class="limiter">
+  <div class="container-login100">
+    <div class="table-responsive">
+      <div class="flex-container">
+        <p-button
+          [rounded]="true"
+          [text]="true"
+          icon="pi pi-refresh"
+          size="small"
+          label="Actualizar"
+          severity="warning"
+          (click)="actualizar()"
+        ></p-button>
+
+        <div class="flex">
+          <p-button
+            [rounded]="true"
+            [text]="true"
+            icon="pi pi-plus"
+            size="small"
+            label="Añadir"
+            severity="warning"
+            (click)="mostrarSidebar()"
+          ></p-button>
+
+          <p-button
+            [rounded]="true"
+            [text]="true"
+            icon="pi pi-filter"
+            size="small"
+            label="Filtrar"
+            severity="warning"
+            (click)="mostrarFiltros()"
+          ></p-button>
+        </div>
+      </div>
+
+      <div *ngIf="loading" class="loading-container">
+        <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+        <p>Actualizando</p>
+      </div>
+
+      <div *ngIf="!loading">
+        <p-table
+          [value]="taskGrup"
+          [tableStyle]="{ 'min-width': '50rem', 'max-width': '100rem' }"
+          class="custom-table"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="titulo">
+                Título<p-sortIcon field="titulo"></p-sortIcon>
+              </th>
+              <th pSortableColumn="descripcion">
+                Descripción<p-sortIcon field="descripcion"></p-sortIcon>
+              </th>
+              <th pSortableColumn="fechaVencimiento">
+                Fecha de vencimiento<p-sortIcon
+                  field="fechaVencimiento"
+                ></p-sortIcon>
+              </th>
+              <th pSortableColumn="prioridad.text">
+                Prioridad<p-sortIcon field="prioridad"></p-sortIcon>
+              </th>
+              <th pSortableColumn="etiquetas">
+                Etiquetas<p-sortIcon field="etiquetas"></p-sortIcon>
+              </th>
+              <th pSortableColumn="estado.nombre">
+                Estado<p-sortIcon field="estado"></p-sortIcon>
+              </th>
+              <th>Opciones</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-taskGrupItem let-i="index">
+            <tr>
+              <td>{{ taskGrupItem.titulo }}</td>
+              <td>{{ taskGrupItem.descripcion }}</td>
+              <td>{{ taskGrupItem.fechaVencimiento }}</td>
+              <td>{{ taskGrupItem.prioridad?.text }}</td>
+              <td></td>
+              <td></td>
+              <td>
+                <p-button
+                  icon="pi pi-pencil"
+                  severity="info"
+                  [rounded]="true"
+                  [text]="true"
+                  (click)="editarTarea(taskGrupItem)"
+                ></p-button>
+                <p-button
+                  icon="pi pi-trash"
+                  severity="danger"
+                  [rounded]="true"
+                  [text]="true"
+                  (click)="eliminarTarea(taskGrupItem)"
+                ></p-button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PANEL AGREGAR NUEVA TAREA -->
+<p-sidebar
+  [(visible)]="sidebarVisible"
+  position="right"
+  [baseZIndex]="10"
+  (onHide)="ocultarSidebar()"
+>
+  <ng-template pTemplate="header">
+    {{ validateEdit ? "Editar Tarea" : "Agregar Tarea" }}
+  </ng-template>
+
+  <ng-container *ngIf="!validateEdit">
+    <form [formGroup]="tareas" class="form-control">
+      <div class="p-field">
+        <label for="titulo">Título:</label>
+        <input
+          id="titulo"
+          type="text"
+          pInputText
+          formControlName="titulo"
+          class="input-width"
+        />
+      </div>
+      <div class="p-field">
+        <label for="descripcion">Descripción:</label>
+        <input
+          id="descripcion"
+          type="text"
+          pInputText
+          formControlName="descripcion"
+          class="input-width"
+        />
+      </div>
+      <div class="p-field">
+        <label for="fechaVencimiento">Fecha de vencimiento:</label>
+        <p-calendar
+          dateFormat="dd/mm/yy"
+          formControlName="fechaVencimiento"
+          [showIcon]="true"
+          class="input-width"
+        ></p-calendar>
+      </div>
+      <div class="p-field">
+        <label for="prioridad">Prioridad:</label>
+        <p-dropdown
+          formControlName="prioridad"
+          [options]="prioridades"
+          optionLabel="text"
+          placeholder="Seleccione la prioridad"
+          class="input-width"
+        ></p-dropdown>
+      </div>
+    </form>
+  </ng-container>
+
+  <ng-container *ngIf="validateEdit">
+    <form [formGroup]="tareas" class="form-control">
+      <div class="p-field">
+        <label for="titulo">Título:</label>
+        <input
+          id="titulo"
+          type="text"
+          pInputText
+          formControlName="titulo"
+          class="input-width"
+          
+        />
+      </div>
+      <div class="p-field">
+        <label for="descripcion">Descripción:</label>
+        <input
+          id="descripcion"
+          type="text"
+          pInputText
+          formControlName="descripcion"
+          class="input-width"
+        />
+      </div>
+      <div class="p-field">
+        <label for="fechaVencimiento">Fecha de vencimiento:</label>
+        <p-calendar
+          dateFormat="dd/mm/yy"
+          formControlName="fechaVencimiento"
+          [showIcon]="true"
+          class="input-width"
+        ></p-calendar>
+      </div>
+      <div class="p-field">
+        <label for="prioridad">Prioridad:</label>
+        <p-dropdown
+          formControlName="prioridad"
+          [options]="prioridades"
+          optionLabel="text"
+          placeholder="Seleccione la prioridad"
+          class="input-width"
+        ></p-dropdown>
+      </div>
+    </form>
+  </ng-container>
+
+  <ng-template pTemplate="footer">
+    <div class="p-field">
+      <ng-container *ngIf="!validateEdit">
+        <p-button
+          type="submit"
+          [rounded]="true"
+          [text]="true"
+          severity="warning"
+          label="Guardar"
+          (click)="Agregar()"
+        ></p-button>
+      </ng-container>
+      <ng-container *ngIf="validateEdit">
+        <p-button
+          type="submit"
+          [rounded]="true"
+          [text]="true"
+          severity="warning"
+          label="Actualizar"
+          (click)="Editar()"
+        ></p-button>
+      </ng-container>
+    </div>
+  </ng-template>
+</p-sidebar>
+
+<!-- PANEL FILTRAR TAREA -->
+<p-sidebar
+  [(visible)]="filtrosVisible"
+  position="right"
+  [baseZIndex]="10"
+  (onHide)="ocultarFiltros()"
+>
+  <ng-template pTemplate="header">Filtrar Tareas</ng-template>
+  <div [formGroup]="filtroForm">
+    <div class="p-field">
+      <label for="titulo">Título:</label>
+      <input
+        id="titulo"
+        type="text"
+        pInputText
+        class="input-width"
+        formControlName="titulo"
+      />
+    </div>
+    <div class="p-field">
+      <label for="descripcion">Descripción:</label>
+      <input
+        id="descripcion"
+        type="text"
+        pInputText
+        class="input-width"
+        formControlName="descripcion"
+      />
+    </div>
+    <div class="p-field">
+      <label for="fechaVencimiento">Fecha de vencimiento:</label>
+      <p-calendar
+        id="fechaVencimiento"
+        dateFormat="dd/mm/yy"
+        formControlName="fechaVencimiento"
+        [showIcon]="true"
+        class="input-width"
+      ></p-calendar>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="p-field">
+      <div class="flex">
+        <p-button
+          type="submit"
+          [rounded]="true"
+          [text]="true"
+          severity="warning"
+          label="Filtrar"
+          (click)="filtrarTareas()"
+        ></p-button>
+      </div>
+      <div class="flex">
+        <p-button
+          type="button"
+          [rounded]="true"
+          [text]="true"
+          severity="secondary"
+          label="Limpiar"
+          (click)="limpiarFiltros()"
+        ></p-button>
+      </div>
+    </div>
+  </ng-template>
+</p-sidebar>

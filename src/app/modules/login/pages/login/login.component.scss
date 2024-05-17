@@ -1,0 +1,65 @@
+.card {
+  display: flex;
+  background: var(--surface-card);
+  padding: 1rem;
+  border-radius: 10px;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.p-card-inicio {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+:host ::ng-deep .p-card-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.p-field {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.p-field label {
+  margin-bottom: 0.1rem;
+  text-align: left;
+}
+
+.p-field .p-dropdown,
+.p-field .p-calendar,
+.p-field .p-inputtext {
+  width: 100%;
+}
+
+.p-field .p-button {
+  width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .p-card-inicio {
+    width: 90%;
+  }
+
+  .form-control {
+    width: 90%;
+  }
+
+  .p-field {
+    width: 100%;
+  }
+}

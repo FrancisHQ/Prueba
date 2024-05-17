@@ -1,0 +1,84 @@
+.title-principal {
+  font-size: large;
+  margin-bottom: 10px;
+}
+
+.title-principal p {
+  text-align: left;
+  margin: 10px;
+}
+
+.title-principal-menu {
+  margin: 10px;
+  color: orange;
+}
+
+:host ::ng-deep .p-tabmenu .p-menuitem-link,
+:host ::ng-deep .p-tabmenu .p-menuitem-link:hover,
+:host ::ng-deep .p-tabmenu .p-menuitem-link.p-highlight {
+  background-color: #FF7F00 !important;
+  color: #ffffff !important;
+}
+
+.custom-table .p-datatable-tbody tr td {
+  padding: 0.5rem;
+}
+
+.table-responsive {
+  padding: 10px;
+  overflow-x: auto;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.loading-container i {
+  color: orange;
+}
+
+.loading-container p {
+  color: black;
+  padding: 5px;
+}
+
+.p-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.input-width {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  padding-bottom: 0.2rem;
+}
+
+@media screen and (max-width: 768px) {
+  .title-principal-menu {
+    margin: 10px auto;
+  }
+
+  .flex-container {
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .input-width {
+    max-width: none;
+  }
+}

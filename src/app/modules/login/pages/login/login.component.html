@@ -1,0 +1,68 @@
+<div class="card flex justify-content-center">
+  <p-card
+    header="Inicio de sesión"
+    [style]="{ width: '360px' }"
+    class="p-card-inicio"
+  >
+    <ng-template pTemplate="header" class="p-header-inicio">
+      <img
+        alt="Card"
+        src="assets/images/image.png"
+        style="
+          width: 40%;
+          display: flex;
+          justify-content: center;
+          border-radius: 25%;
+        "
+      />
+    </ng-template>
+
+    <form [formGroup]="myForm" class="form-control">
+      <div class="p-field">
+        <label for="exampleFormControlInput1" class="form-label">Usuario:</label>
+        <input
+          pInputText
+          formControlName="usuario"
+          class="ng-invalid ng-dirty"
+          [class.is-invalid]="f.usuario.errors && f.usuario.touched"
+          type="email"
+          class="form-control"
+          id="exampleFormControlInput1"
+          placeholder="Ingresa tu usuario"
+        />
+        <ng-template *ngIf="f.password.errors && f.password.touched">
+          <div id="validationServerUserNameFeedBack" class="invalid-feedback">
+            <p style="color: red">Usuario obligatorio*</p>
+          </div>
+        </ng-template>
+      </div>
+      <div class="p-field">
+        <label required for="exampleFormControlInput1" class="form-label"
+          >Contraseña:</label
+        >
+        <input
+          pInputText
+          formControlName="password"
+          class="ng-invalid ng-dirty"
+          [class.is-invalid]="f.password.errors && f.password.touched"
+          type="password"
+          required
+          class="form-control"
+          id="exampleFormControlInput1"
+          placeholder="Ingresa tu contraseña"
+        />
+
+        <ng-template *ngIf="f.password.errors && f.password.touched">
+          <div id="validationServerUserNameFeedBack" class="invalid-feedback">
+            <p style="color: red">Contraseña obligatoria*</p>
+          </div>
+        </ng-template>
+      </div>
+      <div class="p-field">
+        <p-button class="submit" label="Ingresar" severity="warning" (click)="submitFormulario()"
+          ></p-button
+        >
+      </div>
+    </form>
+  </p-card>
+</div>
