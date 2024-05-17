@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MenuItem } from 'primeng/api';
+import { IEstado } from 'src/app/interfaces/IEstado';
 import { IPrioridad } from 'src/app/interfaces/IPrioridad';
 import { ITareas } from 'src/app/interfaces/ITareas';
 import Swal from 'sweetalert2';
@@ -25,14 +26,16 @@ export class PrincipalComponent implements OnInit {
   filtrosVisible = false;
   ultimoId: number = 0; // Variable para almacenar el último ID
   validateEdit = false;
+  estados: IEstado[] = [];
 
   constructor(private _fb: FormBuilder, private datePipe: DatePipe) {
     this.tareas = this._fb.group({
       id: [''],
-      titulo: [null],
+      titulo: [null, Validators.required],
       descripcion: [null, Validators.required],
-      fechaVencimiento: [null],
-      prioridad: [null],
+      fechaVencimiento: [null, Validators.required],
+      prioridad: [null, Validators.required],
+      etiqueta: [null, Validators.required],
       estado: [1],
       filtro: [''],
     });
@@ -53,6 +56,11 @@ export class PrincipalComponent implements OnInit {
       { text: 'Alta', key: '1' },
       { text: 'Media', key: '2' },
       { text: 'Baja', key: '3' },
+    ];
+
+    this.estados = [
+      { nombre: 'Pendiente', id: 1 },
+      { nombre: 'Completado', id: 1 },
     ];
 
     this.filtroForm.valueChanges.subscribe(() => {
@@ -91,8 +99,6 @@ export class PrincipalComponent implements OnInit {
         'dd/MM/yyyy'
       ) || '';
 
-    console.log('Filtro:', { filtroTitulo, filtroDescripcion, filtroFecha });
-
     if (!filtroTitulo && !filtroDescripcion && !filtroFecha) {
       this.taskGrup = [...this.originalTaskGrup];
       return;
@@ -128,13 +134,21 @@ export class PrincipalComponent implements OnInit {
       });
       return;
     }
-
+  
     const tarea = this.tareas.value;
     tarea.id = ++this.ultimoId;
     tarea.fechaVencimiento = this.datePipe.transform(
       tarea.fechaVencimiento,
       'dd/MM/yyyy'
     );
+  
+    const estadoPendiente = this.estados.find(estado => estado.nombre === 'Pendiente');
+    if (estadoPendiente) {
+      tarea.estado = estadoPendiente;
+    } else {
+      tarea.estado = this.estados[0];
+    }
+  
     this.taskGrup.push(tarea);
     this.originalTaskGrup.push(tarea);
     this.guardarTareas();
@@ -143,6 +157,7 @@ export class PrincipalComponent implements OnInit {
     this.actualizar();
     localStorage.setItem('ultimoId', this.ultimoId.toString());
   }
+  
 
   editarTarea(tarea: ITareas) {
     this.validateEdit = true;
@@ -155,11 +170,8 @@ export class PrincipalComponent implements OnInit {
       fechaVencimiento: tarea.fechaVencimiento,
       prioridad: tarea.prioridad,
     });
-    console.log('this.tarea', this.tarea);
-    console.log('this.tareas', this.tareas.value);
   }
   Editar() {
-    console.log('this.tareas en EDITAR', this.tareas.value);
     const objetoEncontrado = this.taskGrup.find(x => x.id === this.tareas.value.id);
     if (objetoEncontrado) {
       const index = this.taskGrup.indexOf(objetoEncontrado);
@@ -177,9 +189,7 @@ export class PrincipalComponent implements OnInit {
           prioridad: this.tareas.value.prioridad
         };
       }
-    }
-    console.log("this.taskGrup", this.taskGrup);
-    
+    }    
     if (this.tareas.valid) {
       this.sidebarVisible = false;
     }
@@ -196,7 +206,6 @@ export class PrincipalComponent implements OnInit {
   }
 
   private guardarTareas() {
-    console.log(JSON.stringify(this.taskGrup));
     localStorage.setItem('Tareas', JSON.stringify(this.taskGrup));
   }
 

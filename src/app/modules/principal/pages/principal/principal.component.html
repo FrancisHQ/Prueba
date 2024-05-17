@@ -83,8 +83,8 @@
               <td>{{ taskGrupItem.descripcion }}</td>
               <td>{{ taskGrupItem.fechaVencimiento }}</td>
               <td>{{ taskGrupItem.prioridad?.text }}</td>
-              <td></td>
-              <td></td>
+              <td>{{ taskGrupItem.etiqueta }}</td>
+              <td>{{ taskGrupItem.estado?.nombre }}</td>
               <td>
                 <p-button
                   icon="pi pi-pencil"
@@ -160,6 +160,16 @@
           placeholder="Seleccione la prioridad"
           class="input-width"
         ></p-dropdown>
+      </div>
+      <div class="p-field">
+        <label for="etiqueta">Etiquetas:</label>
+        <input
+          id="etiqueta"
+          type="text"
+          pInputText
+          formControlName="etiqueta"
+          class="input-width"
+        />
       </div>
     </form>
   </ng-container>
