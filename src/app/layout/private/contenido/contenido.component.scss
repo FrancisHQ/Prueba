@@ -4,6 +4,7 @@
   background: linear-gradient(180deg, #E94E1B 0%, #F39200 100%);
   justify-content: space-between;
   color: white;
+  padding: 10px; /* Añadido para espacio entre el contenido y el borde */
 }
 
 :host ::ng-deep .white-icon .pi {
@@ -18,9 +19,8 @@
 
 .salida {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
-  margin: 10px;
 }
 
 .footer-contenido {
@@ -30,11 +30,19 @@
   align-items: center;
   color: white;
   height: 60px;
-  width: 100vw;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
 }
 
 .contenido2 p {
   text-align: center;
+}
+
+.main-contenido {
+  min-height: calc(100vh - 140px);
+  padding-bottom: 60px;
 }
 
 /* Media queries para dispositivos de tamaño pequeño */
@@ -43,12 +51,10 @@
     align-items: center;
   }
 
-  .contenido {
-    margin-bottom: 10px;
-  }
-
   .footer-contenido {
     flex-direction: column;
     height: auto;
+    position: static;
+    width: auto;
   }
 }
